@@ -7,9 +7,13 @@ import {useState} from 'react'
 const Expenses = (props) => {
   const [year, setYear] = useState('2020')
 
+  const filteredYear = props.items.filter((expense) => {
+      return expense.date.getFullYear().toString() === year
+    })
+  
+
   const changeExpenseYear = (year) => {
     setYear(year)
-    console.log(year)
   }
 
     return (
@@ -19,7 +23,7 @@ const Expenses = (props) => {
             selected={year}
             onChangeExpenseYear={changeExpenseYear}
           />
-          {props.items.map((expense) => {
+          {filteredYear.map((expense) => {
             return <ExpenseItem
               key={expense.id}
               title={expense.title}
