@@ -1,68 +1,73 @@
-import styles from "./AddUser.module.css";
 import { useState } from "react";
-import Card from "../UI/Card";
 import Button from "../UI/Button";
+import Card from "../UI/Card";
 import ErrorModal from "../UI/ErrorModal";
+import styles from "./AddUser.module.css";
 
 const AddUser = (props) => {
-  const [enteredUsername, setEnteredUsername] = useState("");
-  const [enteredAge, setEnteredAge] = useState("");
-  const [isValid, setIsValid] = useState(true);
+    const [enteredUser, setEnteredUser] = useState('')
+    const [enteredAge, setEnteredAge] = useState('')
+    const [isvalid, setIsValid] = useState(true)
 
-  const addUserHandler = (e) => {
-    e.preventDefault();
-    if (enteredUsername.trim() === "" || enteredAge === "") {
-      setIsValid(false);
-      return;
+    const usernameHandler = (e) => {
+        setEnteredUser(e.target.value)
     }
-    if (+enteredAge < 1) {
-      setIsValid(false);
-      return;
-    }
-    props.onAddUser(enteredUsername, enteredAge);
 
-    setEnteredUsername("");
-    setEnteredAge("");
-  };
-
-  const usernameChangeHandler = (e) => {
-    setEnteredUsername(e.target.value);
-  };
-
-  const ageChangeHandler = (e) => {
-    setEnteredAge(e.target.value);
+    const ageHandler = (e) => {
+      setEnteredAge(e.target.value);
     };
-    
-    const myErrorHandler = () => {
+
+    const addUserHandler = (e) => {
+        e.preventDefault()
+        if (enteredUser.trim() === '' || enteredAge.trim() === '') {
+            setIsValid(false)
+            return;
+        }
+        if (enteredAge < 1) {
+            setIsValid(false)
+            return;
+        }
+        props.onAddUser(enteredUser, enteredAge)
+
+        setEnteredUser('')
+        setEnteredAge('')
+    }
+
+    const closeModal = () => {
         setIsValid(true)
     }
 
-  return (
-    <div>
-      {!isValid ? (
-              <ErrorModal title="An Error Occured" message="Something went wrong!" onConfirm={myErrorHandler} />
-      ) : (
-        <Card className={styles.input}>
-          <form onSubmit={addUserHandler}>
-            <label htmlFor="username">Username</label>
-            <input
-              id="username"
-              type="text"
-              value={enteredUsername}
-              onChange={usernameChangeHandler}
-            />
-            <label htmlFor="age">Age (Years)</label>
-            <input
-              id="age"
-              type="number"
-              value={enteredAge}
-              onChange={ageChangeHandler}
-            />
-            <Button type="submit">Add User</Button>
-          </form>
-        </Card>
-      )}
-    </div>
-  );
+    return (
+      <div>
+        {!isvalid ? (
+          <ErrorModal
+            title={"An Error Occured"}
+            message={"Something went wrong"}
+            onConfirm={closeModal}
+          />
+        ) : (
+          <Card className={styles.input}>
+            <form onSubmit={addUserHandler}>
+              <label htmlFor="username">Usernamne</label>
+              <input
+                id="username"
+                type="text"
+                value={enteredUser}
+                onChange={usernameHandler}
+              />
+              <label htmlFor="age">Age</label>
+              <input
+                id="age"
+                type="number"
+                value={enteredAge}
+                onChange={ageHandler}
+              />
+              <Button type="submit">Add User</Button>
+            </form>
+          </Card>
+        )}
+      </div>
+    );
 };
+
 export default AddUser;
