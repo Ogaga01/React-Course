@@ -1,12 +1,12 @@
-import {useRef, useEffect} from 'react'
+import {useRef, useImperativeHandle} from 'react'
 import classes from './Input.module.css'
 
 const Input = (props) => {
   const inputRef = useRef()
 
-  useEffect(() => {
+  const activate = () => {
     inputRef.current.focus()
-  }, [])
+  }
 
   return (
     <div
