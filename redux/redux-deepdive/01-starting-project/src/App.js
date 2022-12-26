@@ -3,7 +3,7 @@ import Layout from "./components/Layout/Layout";
 import Products from "./components/Shop/Products";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { sendCartData } from "./store/cart-slice";
+import { fetchCartData, sendCartData } from "./store/cart-action";
 import Notification from "./components/UI/Notification";
 
 let isInitial = true;
@@ -21,6 +21,10 @@ function App() {
   const notification = useSelector((state) => {
     return state.uISlice.notification;
   });
+
+  useEffect(() => {
+    dispatch(fetchCartData())
+  }, [dispatch])
 
   useEffect(() => {
     if (isInitial) {
